@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+
+        <ui:composition template="./szablon.xhtml">
+
+            <ui:define name="title">
+               - #{msg.edytowanie_dep}
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form>
+                <h2>#{msg.edytowanie_dep}</h2>
+                <h:panelGrid columns="3" styleClass="form">
+                #{msg.nazwa}:
+                <h:inputText  id="nazwa" value="#{departamenty.departament.nazwa}" required="true"/>
+                <h:message for="nazwa" styleClass="blad" />
+                <h:inputHidden value="#{departamenty.departament.id}"/>
+                <h:panelGroup>
+                <h:commandButton value="#{msg.zapisz}" action="#{departamenty.Edytuj}" />
+                <h:commandButton value="#{msg.anuluj}" immediate="true" action="departamenty" />
+                </h:panelGroup>
+                </h:panelGrid>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+</html>
