@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
 @Table(name = "pracownicy")
@@ -41,12 +42,14 @@ public class PracownicyEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
+    @XmlTransient
     private Integer id;
     @Size(max = 32)
     @Column(name = "login")
     private String login;
     @Size(max = 255)
     @Column(name = "haslo")
+    @XmlTransient
     private String haslo;
     @Size(max = 20)
     @Column(name = "telefon")
