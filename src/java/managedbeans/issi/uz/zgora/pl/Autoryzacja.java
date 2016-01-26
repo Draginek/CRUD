@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
@@ -22,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Named
 @RequestScoped
-public class Autoryzacja implements Serializable{
+public class Autoryzacja extends Pracownicy implements Serializable{
     private ExternalContext ctx;
     private HttpServletRequest request;
     
@@ -35,11 +34,11 @@ public class Autoryzacja implements Serializable{
     }
     public String wyloguj()
     {
-        try {
+        try { 
             request.logout();
         } catch (ServletException ex) {
             Logger.getLogger(Autoryzacja.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "login";
-}
+    }
 }
