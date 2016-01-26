@@ -43,7 +43,7 @@ public class Pracownicy implements Serializable {
     private UploadedFile zdjecieZal;
     private boolean usunZdjecie;
     private boolean admin;
-    private HtmlDataTable tabela;
+    private HtmlDataTable tabela, tabela2;
     private String folder;
 
     public Pracownicy() {
@@ -67,7 +67,7 @@ public class Pracownicy implements Serializable {
     public void Usun (int id)
     {
         pracownicyEJB.Usun(id);
-        tabela.setFirst(0);
+        tabela2.setFirst(0);
     }
 
     public String Pobierz (int id)
@@ -118,6 +118,7 @@ public class Pracownicy implements Serializable {
                 Logger.getLogger(Pracownicy.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    
         if(usunZdjecie)
         {
             pracownik.setZdjecie(false);
@@ -146,7 +147,7 @@ public class Pracownicy implements Serializable {
     public String index()
     {
         if(tabela != null)
-        tabela.setFirst(0);
+        tabela2.setFirst(0);
         return "index";
     }
     
@@ -168,21 +169,21 @@ public class Pracownicy implements Serializable {
     }
     
     public void pierwszaStrona() {
-        tabela.setFirst(0);
+        tabela2.setFirst(0);
     }
 
     public void poprzedniaStrona() {
-        tabela.setFirst(tabela.getFirst() - tabela.getRows());
+        tabela2.setFirst(tabela2.getFirst() - tabela2.getRows());
     }
 
     public void nastepnaStrona() {
-        tabela.setFirst(tabela.getFirst() + tabela.getRows());
+        tabela2.setFirst(tabela2.getFirst() + tabela2.getRows());
     }
 
     public void ostatniaStrona() {
-        int ile = tabela.getRowCount();
-        int wiersze = tabela.getRows();
-        tabela.setFirst(ile - ((ile % wiersze != 0) ? ile % wiersze : wiersze));
+        int ile = tabela2.getRowCount();
+        int wiersze = tabela2.getRows();
+        tabela2.setFirst(ile - ((ile % wiersze != 0) ? ile % wiersze : wiersze));
     }
     
     public void sprawdzLogin (FacesContext fc, UIComponent c, Object value)
@@ -204,10 +205,13 @@ public class Pracownicy implements Serializable {
 
     public void sprawdzZdjecie (FacesContext fc, UIComponent c, Object value)
     {
+        if(value==null)
+            return;
         Locale loc = FacesContext.getCurrentInstance().getViewRoot().getLocale();
         ResourceBundle rb = ResourceBundle.getBundle("bundles.issi.uz.zgora.pl.messages",loc);
 
         UploadedFile plik = (UploadedFile)value;
+      
         if(!plik.getContentType().equals("image/jpeg"))
         {
             throw new ValidatorException(new FacesMessage(rb.getString("zdjecie.validator_typ")));
@@ -274,6 +278,10 @@ public class Pracownicy implements Serializable {
      * @return the tabela
      */
     public HtmlDataTable getTabela() {
+        if(tabela!=null){
+            tabela2=tabela;
+            tabela = null;
+        }
         return tabela;
     }
 
@@ -281,9 +289,9 @@ public class Pracownicy implements Serializable {
      * @param tabela the tabela to set
      */
     public void setTabela(HtmlDataTable tabela) {
-        this.tabela = tabela;
+        this.tabela2 = tabela;
     }
-    
+
     
     
 }
